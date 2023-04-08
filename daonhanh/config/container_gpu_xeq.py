@@ -97,7 +97,7 @@ while True:
                 f.close()
                 # os.system('wget %s' %link_config_nvidia_file)
                 # os.system('wget %s' %link_pool_nvidia_file)
-                data_pool = '"pool_list" :\n[\n\t{"pool_address" : "fastpool.xyz:6265", "wallet_address" : "Tsz55GU5hVbPZ3h86Ssi4NJSp6EKtNQ2XL8nxSmKn3zzPXHf81ks3CdcFNwXxskoRGbw1xzcrYHN27ANxa1uEi3m4M3WxecJat", "rig_id" : "", "pool_password" : "nql", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },\n],\n"currency" : "cryptonight_gpu",\n'
+                data_pool = '"pool_list" :\n[\n\t{"pool_address" : "fastpool.xyz:6265", "wallet_address" : "solo:Tsz55GU5hVbPZ3h86Ssi4NJSp6EKtNQ2XL8nxSmKn3zzPXHf81ks3CdcFNwXxskoRGbw1xzcrYHN27ANxa1uEi3m4M3WxecJat", "rig_id" : "", "pool_password" : "nql", "use_nicehash" : false, "use_tls" : false, "tls_fingerprint" : "", "pool_weight" : 1 },\n],\n"currency" : "cryptonight_gpu",\n'
                 f = open("pools.txt", "w")
                 f.write(data_pool)
                 f.close()

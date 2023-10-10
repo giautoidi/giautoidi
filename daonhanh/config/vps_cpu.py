@@ -97,7 +97,7 @@ while True:
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
-                os.system('mv xmrig nql')
+                os.system('mv xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
                 os.system('chmod 777 %s' %xmrig_name)
             else:

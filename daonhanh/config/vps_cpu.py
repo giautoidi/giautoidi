@@ -4,7 +4,7 @@ import time
 from sys import platform
 import requests
 import subprocess
-import multiprocessing
+#import multiprocessing
 
 
 if platform == "linux" or platform == "linux2":
@@ -13,10 +13,10 @@ elif platform == "darwin":
     operate_system = 'OS X'
 elif platform == "win32":
     operate_system = 'win'
-cores = multiprocessing.cpu_count()
+#cores = multiprocessing.cpu_count()
 #cores = cores - 1
-if cores <= 0:
-    cores = 1
+#if cores <= 0:
+#    cores = 1
 timeout = 30
 thoi_gian_nghi = 28800
 
@@ -36,7 +36,7 @@ if operate_system == 'lin':
         pass
 import psutil
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
-command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80 -t %s' %cores
+command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
     time.sleep(1)

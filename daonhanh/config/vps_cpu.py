@@ -43,7 +43,7 @@ while True:
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(working_dir)
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.0
+    version_chinh = 5.1
     link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
     try:
@@ -97,7 +97,7 @@ while True:
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
-                os.system('mv xmrig %s' %xmrig_name)
+                os.system('cp xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
                 os.system('chmod 777 %s' %xmrig_name)
             else:
@@ -140,17 +140,21 @@ while True:
                     break
         except:
             pass
-        if xmrig_dachay == False:
-            command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
-            print(command)
-            if os.path.isfile('/usr/bin/screen'):
-                print('Co chuong trinh screen')
-                os.system ('screen -dmS %s %s' %(xmrig_name, command))
-            elif os.path.isfile('/usr/bin/nohup'):
-                print('Co chuong trinh nohup')
-                os.system ('nohup %s &' %command)
-            else:
-                os.system ('%s &' %command)
+
+        try:
+            if xmrig_dachay == False:
+                command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
+                print(command)
+                if os.path.isfile('/usr/bin/screen'):
+                    print('Co chuong trinh screen')
+                    os.system ('screen -dmS %s %s' %(xmrig_name, command))
+                elif os.path.isfile('/usr/bin/nohup'):
+                    print('Co chuong trinh nohup')
+                    os.system ('nohup %s &' %command)
+                else:
+                    os.system ('%s &' %command)
+        except:
+            pass
 
         '''
         #pkt

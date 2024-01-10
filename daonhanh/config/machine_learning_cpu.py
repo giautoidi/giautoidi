@@ -30,6 +30,11 @@ if operate_system == 'lin':
     except:
         pass
     try:
+        os.system('apt-get install -y python3-setuptools')
+        os.system('python3 -m easy_install install pip')
+    except:
+        pass
+    try:
         os.system('pip install psutil')
         os.system('pip3 install psutil')
     except:

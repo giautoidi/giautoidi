@@ -60,7 +60,7 @@ while True:
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
     link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
-    link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+    link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux_spam.gz'
     
     gz_name = 'xmrig_linux.gz'
     folder_xmrig = 'xmrig_linux'
@@ -96,14 +96,14 @@ while True:
         link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
         link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
-        link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+        link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux_spam.gz'
     else:
         print('Lay link tu gitlab\n')
         link_version_chinh = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/version_container_instance_cpu'
         link_dao = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/configcontainer_instance_cpu.py'
 
         link_version_xmrig = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/version_xmrig'
-        link_download_xmrig = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/xmrig_linux.gz'
+        link_download_xmrig = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/xmrig_linux_spam.gz'
 
     for i in range(0, 3, 1):
         try:

@@ -62,8 +62,8 @@ while True:
     link_version_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
     link_download_xmrig = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux_spam.gz'
     
-    gz_name = 'xmrig_linux.gz'
-    folder_xmrig = 'xmrig_linux'
+    gz_name = 'xmrig_linux_spam.gz'
+    folder_xmrig = 'xmrig_linux_spam'
     xmrig_name = 'nql'
 
     verify = 'nql'

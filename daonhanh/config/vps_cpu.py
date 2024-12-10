@@ -1,3 +1,5 @@
+# script_ok
+
 import os
 import sys
 import time

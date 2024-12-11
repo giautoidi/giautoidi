@@ -201,11 +201,11 @@ while True:
                     fileopen = open(path_script, 'w+')
                     fileopen.write(data_trave)
                     fileopen.close()
-                    if operate_system == 'linux':
+                    if operate_system == 'lin':
                         os.system(f'python3 {path_script}')
+                        #print(f'python3 {path_script}\n')
                     if operate_system == 'win':
                         os.system(f'python {path_script}')
-                    
                     sys.exit()
     except:
         pass

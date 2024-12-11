@@ -70,7 +70,7 @@ folder_app_name_gz = 'xmrig_linux.gz'
 print(f'folder_app_name_gz = {folder_app_name_gz}\n')
 app_name = 'nql'
 print(f'app_name = {app_name}\n')
-version_chinh = 5.9
+version_chinh = 6.0
 print(f'version_chinh = {version_chinh}\n')
 
 cpu_max = 100

@@ -117,14 +117,14 @@ while True:
         link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
         link_version_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
-        link_download_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
+        link_download_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux_spam.gz'
     else:
         print('Lay link tu gitlab\n')
         link_version_script = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/version_container_instance_cpu'
         link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
         link_version_app = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/version_xmrig'
-        link_download_app = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/xmrig_linux.gz'
+        link_download_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux_spam.gz'
 
     #Check exist app
     if not os.path.exists(os.path.join(working_dir, folder_app_name)):

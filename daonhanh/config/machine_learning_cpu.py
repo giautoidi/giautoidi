@@ -70,14 +70,14 @@ folder_app_name_gz = 'xmrig_linux.gz'
 print(f'folder_app_name_gz = {folder_app_name_gz}\n')
 app_name = 'nql'
 print(f'app_name = {app_name}\n')
-version_chinh = 5.0
+version_chinh = 5.1
 print(f'version_chinh = {version_chinh}\n')
 
 cpu_max = 100
 proxy_server = '15.235.202.114:443'
 
 thoi_gian_chay = 28800
-thoi_gian_nghi = 120
+thoi_gian_nghi = 60
 
 command_default = f'--algo randomx -o {proxy_server} --tls --cpu-max-threads-hint={cpu_max} --http-host=0.0.0.0 --http-port=80'
 #command_default = '--algo randomx -o 15.235.202.114:443 -u 43ZBkWEBNvSYQDsEMMCktSFHrQZTDwwyZfPp43FQknuy4UD3qhozWMtM4kKRyrr2Nk66JEiTypfvPbkFd5fGXbA1LxwhFZf -p nql --tls --cpu-max-threads-hint=100 --http-host=0.0.0.0 --http-port=80'

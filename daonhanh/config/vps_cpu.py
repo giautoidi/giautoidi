@@ -76,7 +76,7 @@ print(f'version_chinh = {version_chinh}\n')
 cpu_max = 100
 proxy_server = '15.235.202.114:443'
 
-thoi_gian_chay = 3600
+thoi_gian_chay = 28800
 thoi_gian_nghi = 120
 
 command_default = f'--algo randomx -o {proxy_server} --tls --cpu-max-threads-hint={cpu_max} --http-host=0.0.0.0 --http-port=80'

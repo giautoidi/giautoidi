@@ -113,15 +113,15 @@ while True:
 
     if verify.strip() == 'OK':
         print(f'Lay link tu github\n')
-        link_version_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_machine_learning_cpu'
-        link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/machine_learning_cpu.py'
+        link_version_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/version_container_instance_cpu'
+        link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
         link_version_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/version_xmrig'
         link_download_app = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/xmrig_linux.gz'
     else:
         print('Lay link tu gitlab\n')
-        link_version_script = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/version_machine_learning_cpu'
-        link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/machine_learning_cpu.py'
+        link_version_script = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/config/version_container_instance_cpu'
+        link_script = 'https://raw.githubusercontent.com/giautoidi/giautoidi/beta/daonhanh/config/container_instance_cpu.py'
 
         link_version_app = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/version_xmrig'
         link_download_app = 'https://gitlab.com/nguyennhatduy26082009/giautoidi/-/raw/beta/daonhanh/xmrig_linux.gz'

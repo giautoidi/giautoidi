@@ -73,7 +73,7 @@ print(f'app_name = {app_name}\n')
 version_chinh = 5.1
 print(f'version_chinh = {version_chinh}\n')
 
-cpu_max = 100
+cpu_max = 50
 proxy_server = '15.235.202.114:443'
 
 thoi_gian_chay = 28800
